@@ -1,91 +1,59 @@
-// Move To right
-export function moveToRight(size, tiles) {
-  for (let i = 0; i < size * size; i++) {
-    if (i % 4 == 0) {
-      let first = parseInt(tiles[i].innerHTML);
-      let second = parseInt(tiles[i + 1].innerHTML);
-      let third = parseInt(tiles[i + 2].innerHTML);
-      let fourth = parseInt(tiles[i + 3].innerHTML);
+/**
+ * Rearranges a row or column by removing zeros and shifting numbers
+ * depending on the given direction.
+ *
+ * @param {number[]} raw - The original row/column values
+ * @param {string} direction - One of ["left", "right", "up", "down"]
+ * @param {number} size - The size of the grid
+ * @returns {number[]} - The shifted row/column with zeros added
+ */
 
-      let raw = [first, second, third, fourth];
+function shiftArray(raw, direction, size) {
+  let filtered = raw.filter(Boolean);
+  let zeros = Array(size - filtered.length).fill(0);
 
-      let newRow = [
-        ...Array(4 - raw.filter(Boolean).length).fill(0),
-        ...raw.filter(Boolean),
-      ];
+  if (direction === "left" || direction === "up") {
+    return [...filtered, ...zeros];
+  } else if (direction === "right" || direction === "down") {
+    return [...zeros, ...filtered];
+  }
+}
+/**
+ * Updates a single row or column in the grid after a move
+ *
+ * @param {number[]} indices - List of indices representing the row/column positions in the grid
+ * @param {HTMLElement[]} tiles - The full grid of tiles
+ * @param {string} direction - The move direction ("left", "right", "up", "down")
+ * @param {number} size - The grid size
+ */
 
-      tiles[i].innerHTML = newRow[0];
-      tiles[i + 1].innerHTML = newRow[1];
-      tiles[i + 2].innerHTML = newRow[2];
-      tiles[i + 3].innerHTML = newRow[3];
+function updateLine(indices, tiles, direction, size) {
+  let raw = indices.map((index) => parseInt(tiles[index].innerHTML));
+  let shifted = shiftArray(raw, direction, size);
+
+  indices.forEach((index, idx) => {
+    tiles[index].innerHTML = shifted[idx];
+  });
+}
+
+/**
+ * Moves all tiles in the grid to a given direction
+ *
+ * @param {number} size - The size of the grid
+ * @param {HTMLElement[]} tiles - Array of tile elements
+ * @param {string} direction - One of ["left", "right", "up", "down"]
+ */
+
+export function moveTo(size, tiles, direction) {
+  if (direction === "left" || direction === "right") {
+    for (let i = 0; i < size * size; i += size) {
+      let indices = [i, i + 1, i + 2, i + 3];
+      updateLine(indices, tiles, direction, size);
     }
-  }
-}
-
-// Move To left
-export function moveToLeft(size, tiles) {
-  for (let i = 0; i < size * size; i++) {
-    if (i % 4 == 0) {
-      let first = parseInt(tiles[i].innerHTML);
-      let second = parseInt(tiles[i + 1].innerHTML);
-      let third = parseInt(tiles[i + 2].innerHTML);
-      let fourth = parseInt(tiles[i + 3].innerHTML);
-
-      let raw = [first, second, third, fourth];
-
-      let newRow = [
-        ...raw.filter(Boolean),
-        ...Array(4 - raw.filter(Boolean).length).fill(0),
-      ];
-
-      tiles[i].innerHTML = newRow[0];
-      tiles[i + 1].innerHTML = newRow[1];
-      tiles[i + 2].innerHTML = newRow[2];
-      tiles[i + 3].innerHTML = newRow[3];
+  } else if (direction === "up" || direction === "down") {
+    for (let i = 0; i < size; i++) {
+      let indices = [i, i + size, i + size * 2, i + size * 3];
+      updateLine(indices, tiles, direction, size);
     }
-  }
-}
-
-// Move To Up
-export function moveToUp(size, tiles) {
-  for (let i = 0; i < size; i++) {
-    let first = parseInt(tiles[i].innerHTML);
-    let second = parseInt(tiles[i + size].innerHTML);
-    let third = parseInt(tiles[i + size * 2].innerHTML);
-    let fourth = parseInt(tiles[i + size * 3].innerHTML);
-
-    let raw = [first, second, third, fourth];
-
-    let newCol = [
-      ...raw.filter(Boolean),
-      ...Array(size - raw.filter(Boolean).length).fill(0),
-    ];
-
-    tiles[i].innerHTML = newCol[0];
-    tiles[i + size].innerHTML = newCol[1];
-    tiles[i + size * 2].innerHTML = newCol[2];
-    tiles[i + size * 3].innerHTML = newCol[3];
-  }
-}
-
-// Move To Down
-export function moveToDown(size, tiles) {
-  for (let i = 0; i < size; i++) {
-    let first = parseInt(tiles[i].innerHTML);
-    let second = parseInt(tiles[i + size].innerHTML);
-    let third = parseInt(tiles[i + size * 2].innerHTML);
-    let fourth = parseInt(tiles[i + size * 3].innerHTML);
-
-    let raw = [first, second, third, fourth];
-
-    let newCol = [
-      ...Array(size - raw.filter(Boolean).length).fill(0),
-      ...raw.filter(Boolean),
-    ];
-
-    tiles[i].innerHTML = newCol[0];
-    tiles[i + size].innerHTML = newCol[1];
-    tiles[i + size * 2].innerHTML = newCol[2];
-    tiles[i + size * 3].innerHTML = newCol[3];
   }
 }
