@@ -9,6 +9,10 @@
 
 ---
 
+
+https://github.com/user-attachments/assets/06c9e7bc-be99-45aa-aa5f-a06789b4fdf8
+
+
 ## 📖 The Tale of 2048
 
 In a quiet digital universe, a **mystical grid** was born.  
