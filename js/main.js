@@ -27,7 +27,7 @@ function main() {
     Score = combineRow(SIZE, tiles, Score, scoreDiv, "right");
     moveTo(SIZE, tiles, "right");
     generateRandomNumber(tiles);
-     addColours(tiles);
+    addColours(tiles);
   }
 
   // Move To Left
@@ -36,7 +36,7 @@ function main() {
     Score = combineRow(SIZE, tiles, Score, scoreDiv, "left");
     moveTo(SIZE, tiles, "left");
     generateRandomNumber(tiles);
-     addColours(tiles);
+    addColours(tiles);
   }
 
   // Move To Up
@@ -45,7 +45,7 @@ function main() {
     Score = combineColumn(SIZE, tiles, Score, scoreDiv, "up");
     moveTo(SIZE, tiles, "up");
     generateRandomNumber(tiles);
-     addColours(tiles);
+    addColours(tiles);
   }
 
   // Move To Down
@@ -54,28 +54,20 @@ function main() {
     Score = combineColumn(SIZE, tiles, Score, scoreDiv, "down");
     moveTo(SIZE, tiles, "down");
     generateRandomNumber(tiles);
-     addColours(tiles);
+    addColours(tiles);
   }
 
   const handleKey = (e) => {
-    if (e.key === "ArrowRight") {
-      KeyRight();
-    }
-    if (e.key === "ArrowLeft") {
-      keyLeft();
-    }
-    if (e.key === "ArrowUp") {
-      keyUp();
-    }
-    if (e.key === "ArrowDown") {
-      keyDown();
-    }
+    if (e.key === "ArrowRight") KeyRight();
+    if (e.key === "ArrowLeft") keyLeft();
+    if (e.key === "ArrowUp") keyUp();
+    if (e.key === "ArrowDown") keyDown();
   };
 
   document.addEventListener("keydown", handleKey);
 
   let intervalId = setInterval(() => {
-     addColours(tiles);
+    addColours(tiles);
     if (checkWin(tiles, result, intervalId, handleKey)) return;
     if (checkLose(tiles, SIZE, result, intervalId, handleKey)) return;
   }, 50);

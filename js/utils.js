@@ -1,4 +1,9 @@
-// Place a 2 in a random empty tile
+/**
+ * Places a random "2" tile in an empty cell on the board.
+ *
+ * @param {HTMLElement[]} tiles - The array of tile elements.
+ *
+ **/
 export function generateRandomNumber(tiles) {
   let emptyTiles = tiles.filter((tile) => tile.innerHTML == 0);
 
@@ -8,6 +13,14 @@ export function generateRandomNumber(tiles) {
     emptyTiles[random].innerHTML = 2;
   }
 }
+
+/**
+ * Updates the colors of all tiles depending on their values.
+ * Each number has a specific background and text color.
+ *
+ * @param {HTMLElement[]} tiles - The array of tile elements.
+ *
+ ***/
 
 export function addColours(tiles) {
   for (let i = 0; i < tiles.length; i++) {
@@ -66,6 +79,13 @@ export function addColours(tiles) {
     }
   }
 }
+
+/**
+ * Resets the board by setting all tiles to 0.
+ *
+ * @param {HTMLElement[]} tiles - The array of tile elements.
+ *
+ **/
 
 export function reset(tiles) {
   for (let i = 0; i < tiles.length; i++) {

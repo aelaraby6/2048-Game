@@ -1,4 +1,10 @@
-// create tiles on board
+/**
+ * Creates a new game board by generating tile elements and appending them to the grid.
+ *
+ * @param {number} size - The size of the board.
+ * @param {HTMLElement} grid - The grid container element.
+ * @param {HTMLElement[]} tiles - The array to store created tile elements.
+ */
 export function createBoard(size, grid, tiles) {
   for (let i = 0; i < size * size; i++) {
     let tile = document.createElement("div");
@@ -8,6 +14,16 @@ export function createBoard(size, grid, tiles) {
   }
 }
 
+/**
+ * Merges two matching tiles, updates the score, and clears the merged tile.
+ *
+ * @param {number} i - The index of the first tile.
+ * @param {number} j - The index of the second tile.
+ * @param {HTMLElement[]} tiles - The array of tile elements.
+ * @param {number} Score - The current score.
+ * @param {HTMLElement} scoreDiv - The element displaying the score.
+ * @returns {number} - The updated score after merging.
+ */
 function mergeTiles(i, j, tiles, Score, scoreDiv) {
   let combinedTotal =
     parseInt(tiles[i].innerHTML) + parseInt(tiles[j].innerHTML);
@@ -21,7 +37,16 @@ function mergeTiles(i, j, tiles, Score, scoreDiv) {
   return Score;
 }
 
-// Merge matching tiles in row
+/**
+ * Combines matching tiles in a row depending on the direction.
+ *
+ * @param {number} SIZE - The size of the grid.
+ * @param {HTMLElement[]} tiles - The array of tile elements.
+ * @param {number} Score - The current score.
+ * @param {HTMLElement} scoreDiv - The element displaying the score.
+ * @param {string} direction - Either "left" or "right".
+ * @returns {number} - The updated score after merging.
+ */
 export function combineRow(SIZE, tiles, Score, scoreDiv, direction) {
   let step = direction === "left" ? 1 : -1;
   let start = direction === "left" ? 0 : SIZE - 1;
@@ -43,6 +68,16 @@ export function combineRow(SIZE, tiles, Score, scoreDiv, direction) {
   return Score;
 }
 
+/**
+ * Combines matching tiles in a column depending on the direction.
+ *
+ * @param {number} SIZE - The size of the grid .
+ * @param {HTMLElement[]} tiles - The array of tile elements.
+ * @param {number} Score - The current score.
+ * @param {HTMLElement} scoreDiv - The element displaying the score.
+ * @param {string} direction - Either "up" or "down".
+ * @returns {number} - The updated score after merging.
+ */
 export function combineColumn(SIZE, tiles, Score, scoreDiv, direction) {
   let step = direction === "up" ? 1 : -1;
   let start = direction === "up" ? 0 : SIZE - 1;
@@ -64,7 +99,15 @@ export function combineColumn(SIZE, tiles, Score, scoreDiv, direction) {
   return Score;
 }
 
-// check if player wins
+/**
+ * Checks if the player has won (reached 2048 tile).
+ *
+ * @param {HTMLElement[]} tiles - The array of tile elements.
+ * @param {HTMLElement} result - The element displaying the result message.
+ * @param {number} intervalId - The interval ID used for game loop/timer.
+ * @param {Function} handleKey - The event handler for keydown.
+ * @returns {boolean} - True if the player wins, otherwise false.
+ */
 export function checkWin(tiles, result, intervalId, handleKey) {
   for (let i = 0; i < tiles.length; i++) {
     if (parseInt(tiles[i].innerHTML) === 2048) {
@@ -77,7 +120,16 @@ export function checkWin(tiles, result, intervalId, handleKey) {
   return false;
 }
 
-// check if player loses
+/**
+ * Checks if the player has lost (no moves left).
+ *
+ * @param {HTMLElement[]} tiles - The array of tile elements.
+ * @param {number} size - The size of the grid .
+ * @param {HTMLElement} result - The element displaying the result message.
+ * @param {number} intervalId - The interval ID used for game loop/timer.
+ * @param {Function} handleKey - The event handler for keydown.
+ * @returns {boolean} - True if the player loses, otherwise false.
+ */
 export function checkLose(tiles, size, result, intervalId, handleKey) {
   for (let i = 0; i < tiles.length; i++) {
     if (
